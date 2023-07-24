@@ -31,7 +31,7 @@ void CDraw::InitWidget()
     m_pView->centerOn(0, 0);
 
     m_pScene->addItem(m_pRectItem);
-    m_pRectItem->setPos(0, 0);
+    m_pRectItem->setPos(-100, 0);
 }
 
 void CDraw::ConnectSlot()
@@ -45,11 +45,6 @@ void CDraw::resizeEvent(QResizeEvent * event)
 
 void CDraw::on_rectBtn_clicked()
 {
-    QGraphicsRectItem *item = new QGraphicsRectItem(-50, -25, 100, 50);//x,y 为左上角的图元局部坐标，图元中心点为0,0
-    item->setFlags(QGraphicsItem::ItemIsMovable
-        | QGraphicsItem::ItemIsSelectable
-        | QGraphicsItem::ItemIsFocusable);
-    item->setBrush(QBrush(Qt::yellow));
-    item->setPos(0, 0);
-    m_pScene->addItem(item);
+    CControlPointItem* pControlItem = new CControlPointItem(nullptr,QPoint(100,0));
+    m_pScene->addItem(pControlItem);
 }
