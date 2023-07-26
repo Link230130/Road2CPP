@@ -5,48 +5,23 @@
 
 #include <QDebug>
 
-CControlPointItem::CControlPointItem(QGraphicsItem* parent, QPoint center)
-    :QGraphicsItem(parent)
-{
-    m_center = center;
-    m_nType = CP_Rect;
-    m_nWidth = 8;
-    m_nPenWidth = 2;
-    m_brush.setColor(Qt::yellow);
-    m_brush.setStyle(Qt::SolidPattern);
+#include "ControlPointItem.h"
 
-    this->setPos(center);
+/***************** CBaseItem ********************/
+CBaseItem::CBaseItem(QObject * parent)
+{
+    // 将事件传递到子Item
+    this->setHandlesChildEvents(false);
 }
 
-CControlPointItem::~CControlPointItem()
+CBaseItem::~CBaseItem()
 {
-}
-
-void CControlPointItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
-{
-    painter->setRenderHint(QPainter::Antialiasing, true);
-
-    painter->save();
-
-    QPen pen;
-    pen.setColor(Qt::green);
-    pen.setWidth(m_nPenWidth);
-    painter->setPen(pen);
-    painter->setBrush(Qt::green);
-    painter->drawRect(-m_nWidth / 2, -m_nWidth / 2, m_nWidth, m_nWidth);
-
-    painter->restore();
-}
-
-QRectF CControlPointItem::boundingRect() const
-{
-    return QRectF(-m_nWidth / 2, -m_nWidth / 2, m_nWidth, m_nWidth);
 }
 
 
 /***************** CRectItem ********************/
 CRectItem::CRectItem(QObject *parent)
-    : QObject(parent)
+    : CBaseItem(parent)
 {
     this->setAcceptHoverEvents(true);
 
@@ -56,10 +31,21 @@ CRectItem::CRectItem(QObject *parent)
     m_center = QPoint(0, 0);
 
     InitControlVertex();
+    m_boundingRect = QRectF(m_vecControlVertex.at(1)->GetPoint(), m_vecControlVertex.at(4)->GetPoint());
 }
 
 CRectItem::~CRectItem()
 {
+}
+
+void CRectItem::InitControlVertex()
+{
+    m_vecControlVertex.clear();
+    m_vecControlVertex.push_back(new CControlPointItem(this, m_center, 0));  // Center
+    m_vecControlVertex.push_back(new CControlPointItem(this, m_center - QPoint(m_nWidth / 2, m_nHeight / 2), 1));  // Top left
+    m_vecControlVertex.push_back(new CControlPointItem(this, m_center - QPoint(-m_nWidth / 2, m_nHeight / 2), 2)); // Top right
+    m_vecControlVertex.push_back(new CControlPointItem(this, m_center - QPoint(m_nWidth / 2, -m_nHeight / 2), 3)); // Bottom left
+    m_vecControlVertex.push_back(new CControlPointItem(this, m_center + QPoint(m_nWidth / 2, m_nHeight / 2), 4)); // Bottom right
 }
 
 void CRectItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
@@ -70,10 +56,6 @@ void CRectItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
     // Draw rect
     painter->save();
 
-    QPainterPath rectPath;
-    rectPath.addRect(m_vecControlVertex.at(1)->boundingRect());
-    rectPath.addRect(m_vecControlVertex.at(4)->boundingRect());
-
     painter->setPen(Qt::red);
     QBrush brush;
     brush.setColor(QColor(0, 255, 0, 40));
@@ -81,34 +63,57 @@ void CRectItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
 
     painter->setBrush(brush);
 
-    painter->drawRect(-m_nWidth / 2, -m_nHeight / 2, m_nWidth, m_nHeight);
+    painter->drawRect(m_boundingRect);
     painter->restore();
 }
 
-void CRectItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
+void CRectItem::UpdateItemGroup(int nIndex)
 {
-
-}
-
-void CRectItem::hoverMoveEvent(QGraphicsSceneHoverEvent * event)
-{
-
-}
-
-void CRectItem::InitControlVertex()
-{
-    m_vecControlVertex.clear();
-    m_vecControlVertex.push_back(new CControlPointItem(this, m_center));  // Center
-    m_vecControlVertex.push_back(new CControlPointItem(this, m_center - QPoint(m_nWidth / 2, m_nHeight / 2)));  // Top left
-    m_vecControlVertex.push_back(new CControlPointItem(this, m_center - QPoint(-m_nWidth / 2, m_nHeight / 2))); // Top right
-    m_vecControlVertex.push_back(new CControlPointItem(this, m_center - QPoint(m_nWidth / 2, -m_nHeight / 2))); // Bottom left
-    m_vecControlVertex.push_back(new CControlPointItem(this, m_center + QPoint(m_nWidth / 2, m_nHeight / 2))); // Bottom right
+    switch (nIndex)
+    {
+    case 0:
+    {
+        // Center
+        break;
+    }
+    case 1:
+    {
+        // Top Left
+        break;
+    }
+    case 2:
+    {
+        // Top Right
+        break;
+    }
+    case 3:
+    {
+        // Bottom Left
+        break;
+    }
+    case 4:
+    {
+        // 根据Bottom Right更新Top Right和Bottom Left
+        m_vecControlVertex[2]->SetPoint(QPointF(m_vecControlVertex[4]->x(), m_vecControlVertex[2]->y()));
+        m_vecControlVertex[3]->SetPoint(QPointF(m_vecControlVertex[3]->x(), m_vecControlVertex[4]->y()));
+        break;
+    }
+    default:
+        break;
+    }
+    
+    m_boundingRect = QRectF(m_vecControlVertex.at(1)->GetPoint(), m_vecControlVertex.at(4)->GetPoint());
+    this->update();
 }
 
 QRectF CRectItem::boundingRect() const
 {
-    return QRectF(-m_nWidth / 2, -m_nHeight / 2, m_nWidth, m_nHeight);
+    return m_boundingRect;
 }
 
-
-
+QPainterPath CRectItem::shape() const
+{
+    QPainterPath path;
+    path.addRect(m_boundingRect);
+    return path;
+}

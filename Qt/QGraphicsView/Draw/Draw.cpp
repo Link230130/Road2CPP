@@ -45,6 +45,5 @@ void CDraw::resizeEvent(QResizeEvent * event)
 
 void CDraw::on_rectBtn_clicked()
 {
-    CControlPointItem* pControlItem = new CControlPointItem(nullptr,QPoint(100,0));
-    m_pScene->addItem(pControlItem);
+    
 }
