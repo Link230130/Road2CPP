@@ -74,7 +74,7 @@ void CControlPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
         return;
     }
     pParantItem->UpdateItemGroup(m_nIndex);
-    qDebug() << "Control Point Index=" << m_nIndex << ",pointDiff=" << pointDiff;
+    //qDebug() << "Control Point Index=" << m_nIndex << ",pointDiff=" << pointDiff;
 }
 void CControlPointItem::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {

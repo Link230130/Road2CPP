@@ -101,9 +101,8 @@ void CRectItem::UpdateItemGroup(int nIndex)
     default:
         break;
     }
-    
+    this->prepareGeometryChange();
     m_boundingRect = QRectF(m_vecControlVertex.at(1)->GetPoint(), m_vecControlVertex.at(4)->GetPoint());
-    this->update();
 }
 
 QRectF CRectItem::boundingRect() const
