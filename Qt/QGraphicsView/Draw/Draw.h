@@ -28,6 +28,7 @@ protected:
 
 private slots:
     void on_rectBtn_clicked();
+    void on_viewUpdateModeComBox_currentIndexChanged(int nIndex);
 
 private:
     CGraphicsScene*         m_pScene;

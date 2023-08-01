@@ -50,6 +50,7 @@ void CRectItem::InitControlVertex()
 
 void CRectItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
+    qDebug() << "paint, center point=" << mapToScene(m_vecControlVertex[0]->GetPoint()) << m_vecControlVertex[0]->GetPoint();
 
     painter->setRenderHint(QPainter::Antialiasing, true);
 
@@ -64,6 +65,11 @@ void CRectItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
     painter->setBrush(brush);
 
     painter->drawRect(m_boundingRect);
+#if 0
+    // 测试中心点
+    painter->setPen(Qt::red);
+    painter->drawEllipse(m_vecControlVertex[0]->GetPoint(), 15, 15);
+#endif
     painter->restore();
 }
 
@@ -71,29 +77,31 @@ void CRectItem::UpdateItemGroup(int nIndex)
 {
     switch (nIndex)
     {
-    case 0:
-    {
-        // Center
-        break;
-    }
     case 1:
     {
         // Top Left
+        m_vecControlVertex[2]->SetPoint(QPointF(m_vecControlVertex[2]->x(), m_vecControlVertex[1]->y()));
+        m_vecControlVertex[3]->SetPoint(QPointF(m_vecControlVertex[1]->x(), m_vecControlVertex[3]->y()));
         break;
     }
     case 2:
     {
         // Top Right
+        m_vecControlVertex[1]->SetPoint(QPointF(m_vecControlVertex[1]->x(), m_vecControlVertex[2]->y()));
+        m_vecControlVertex[4]->SetPoint(QPointF(m_vecControlVertex[2]->x(), m_vecControlVertex[4]->y()));
         break;
     }
     case 3:
     {
         // Bottom Left
+        m_vecControlVertex[1]->SetPoint(QPointF(m_vecControlVertex[3]->x(), m_vecControlVertex[1]->y()));
+        m_vecControlVertex[4]->SetPoint(QPointF(m_vecControlVertex[4]->x(), m_vecControlVertex[3]->y()));
         break;
     }
     case 4:
     {
         // 根据Bottom Right更新Top Right和Bottom Left
+        m_vecControlVertex[0]->SetPoint(mapFromParent(QPointF(0, 0)));
         m_vecControlVertex[2]->SetPoint(QPointF(m_vecControlVertex[4]->x(), m_vecControlVertex[2]->y()));
         m_vecControlVertex[3]->SetPoint(QPointF(m_vecControlVertex[3]->x(), m_vecControlVertex[4]->y()));
         break;
@@ -102,7 +110,21 @@ void CRectItem::UpdateItemGroup(int nIndex)
         break;
     }
     this->prepareGeometryChange();
-    m_boundingRect = QRectF(m_vecControlVertex.at(1)->GetPoint(), m_vecControlVertex.at(4)->GetPoint());
+    // 更新中心点
+    m_vecControlVertex[0]->SetPoint(QPointF((m_vecControlVertex.at(1)->x() + m_vecControlVertex.at(4)->x()) / 2,
+        (m_vecControlVertex.at(1)->y() + m_vecControlVertex.at(4)->y()) / 2));
+
+    QPointF topLeftPoint = m_vecControlVertex.at(1)->GetPoint();
+    QPointF bottomRightPoint = m_vecControlVertex.at(4)->GetPoint();
+
+    if (topLeftPoint.x() > bottomRightPoint.x() || topLeftPoint.y() > bottomRightPoint.y())
+    {
+        m_boundingRect = QRectF(bottomRightPoint, topLeftPoint);
+    }
+    else
+    {
+        m_boundingRect = QRectF(topLeftPoint, bottomRightPoint);
+    }
 }
 
 QRectF CRectItem::boundingRect() const

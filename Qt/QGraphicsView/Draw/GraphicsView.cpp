@@ -4,6 +4,8 @@
 CGraphicsView::CGraphicsView(QWidget *parent)
     : QGraphicsView(parent)
 {
+    // 采用不同的刷新模式，可能会导致花屏
+    this->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 }
 
 CGraphicsView::~CGraphicsView()
@@ -27,4 +29,9 @@ void CGraphicsView::paintEvent(QPaintEvent * event)
 #endif
 
     QGraphicsView::paintEvent(event);
+}
+
+void CGraphicsView::resizeEvent(QResizeEvent * event)
+{
+    QGraphicsView::resizeEvent(event);
 }

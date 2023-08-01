@@ -63,18 +63,25 @@ void CControlPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
     // 偏移量
     const QPointF pointDiff = event->scenePos() - event->lastScenePos();
 
-    QPointF newCenter = m_center + pointDiff;
-
-    // 更新控制点在parant中的位置
-    SetPoint(newCenter);
+    qDebug() << " CControlPointItem::mouseMoveEvent, pointDiff" << pointDiff;
+    QPointF newCenter = (m_center + pointDiff);
 
     CBaseItem* pParantItem = dynamic_cast<CBaseItem*>(this->parentItem());
     if (pParantItem == nullptr)
     {
         return;
     }
-    pParantItem->UpdateItemGroup(m_nIndex);
-    //qDebug() << "Control Point Index=" << m_nIndex << ",pointDiff=" << pointDiff;
+    if (m_nIndex == 0)
+    {
+        pParantItem->moveBy(pointDiff.x(), pointDiff.y());
+    }
+    else
+    {
+        // 更新控制点在parant中的位置
+        SetPoint(newCenter);
+        pParantItem->UpdateItemGroup(m_nIndex);
+    }
+
 }
 void CControlPointItem::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
