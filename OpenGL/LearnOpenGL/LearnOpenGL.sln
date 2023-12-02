@@ -5,16 +5,32 @@ VisualStudioVersion = 16.0.33130.400
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GL01_HelloOpenGL", "GL01_HelloOpenGL\GL01_HelloOpenGL.vcxproj", "{B7977EE6-37A1-42CC-A5E8-EC28B2EBE4A4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GL02_HelloWindow", "GL02_HelloWindow\GL02_HelloWindow.vcxproj", "{A3E6C452-B7AA-4917-9C92-B51901A78EE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B7977EE6-37A1-42CC-A5E8-EC28B2EBE4A4}.Debug|x64.ActiveCfg = Debug|x64
 		{B7977EE6-37A1-42CC-A5E8-EC28B2EBE4A4}.Debug|x64.Build.0 = Debug|x64
+		{B7977EE6-37A1-42CC-A5E8-EC28B2EBE4A4}.Debug|x86.ActiveCfg = Debug|Win32
+		{B7977EE6-37A1-42CC-A5E8-EC28B2EBE4A4}.Debug|x86.Build.0 = Debug|Win32
 		{B7977EE6-37A1-42CC-A5E8-EC28B2EBE4A4}.Release|x64.ActiveCfg = Release|x64
 		{B7977EE6-37A1-42CC-A5E8-EC28B2EBE4A4}.Release|x64.Build.0 = Release|x64
+		{B7977EE6-37A1-42CC-A5E8-EC28B2EBE4A4}.Release|x86.ActiveCfg = Release|Win32
+		{B7977EE6-37A1-42CC-A5E8-EC28B2EBE4A4}.Release|x86.Build.0 = Release|Win32
+		{A3E6C452-B7AA-4917-9C92-B51901A78EE6}.Debug|x64.ActiveCfg = Debug|x64
+		{A3E6C452-B7AA-4917-9C92-B51901A78EE6}.Debug|x64.Build.0 = Debug|x64
+		{A3E6C452-B7AA-4917-9C92-B51901A78EE6}.Debug|x86.ActiveCfg = Debug|Win32
+		{A3E6C452-B7AA-4917-9C92-B51901A78EE6}.Debug|x86.Build.0 = Debug|Win32
+		{A3E6C452-B7AA-4917-9C92-B51901A78EE6}.Release|x64.ActiveCfg = Release|x64
+		{A3E6C452-B7AA-4917-9C92-B51901A78EE6}.Release|x64.Build.0 = Release|x64
+		{A3E6C452-B7AA-4917-9C92-B51901A78EE6}.Release|x86.ActiveCfg = Release|Win32
+		{A3E6C452-B7AA-4917-9C92-B51901A78EE6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
