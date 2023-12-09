@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GL03_ HelloTriangle", "GL03
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GL04_Exercise", "GL04_Exercise\GL04_Exercise.vcxproj", "{AA644FA0-43D2-4A9E-A163-147A9FBD44D5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GL04_GLSL", "GL04_GLSL\GL04_GLSL.vcxproj", "{6045E96D-8A2E-4093-A6FB-61C86A8E4FDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{AA644FA0-43D2-4A9E-A163-147A9FBD44D5}.Release|x64.Build.0 = Release|x64
 		{AA644FA0-43D2-4A9E-A163-147A9FBD44D5}.Release|x86.ActiveCfg = Release|Win32
 		{AA644FA0-43D2-4A9E-A163-147A9FBD44D5}.Release|x86.Build.0 = Release|Win32
+		{6045E96D-8A2E-4093-A6FB-61C86A8E4FDD}.Debug|x64.ActiveCfg = Debug|x64
+		{6045E96D-8A2E-4093-A6FB-61C86A8E4FDD}.Debug|x64.Build.0 = Debug|x64
+		{6045E96D-8A2E-4093-A6FB-61C86A8E4FDD}.Debug|x86.ActiveCfg = Debug|Win32
+		{6045E96D-8A2E-4093-A6FB-61C86A8E4FDD}.Debug|x86.Build.0 = Debug|Win32
+		{6045E96D-8A2E-4093-A6FB-61C86A8E4FDD}.Release|x64.ActiveCfg = Release|x64
+		{6045E96D-8A2E-4093-A6FB-61C86A8E4FDD}.Release|x64.Build.0 = Release|x64
+		{6045E96D-8A2E-4093-A6FB-61C86A8E4FDD}.Release|x86.ActiveCfg = Release|Win32
+		{6045E96D-8A2E-4093-A6FB-61C86A8E4FDD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
