@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/images/wall.jpg</file>
+        <file>Resources/shaders/shader.frag</file>
+        <file>Resources/shaders/shader.vert</file>
+        <file>Resources/images/container.jpg</file>
+    </qresource>
+</RCC>
