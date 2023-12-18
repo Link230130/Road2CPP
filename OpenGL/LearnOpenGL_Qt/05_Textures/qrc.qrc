@@ -4,5 +4,6 @@
         <file>Resources/shaders/shader.frag</file>
         <file>Resources/shaders/shader.vert</file>
         <file>Resources/images/container.jpg</file>
+        <file>Resources/images/awesomeface.png</file>
     </qresource>
 </RCC>

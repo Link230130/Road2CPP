@@ -8,10 +8,10 @@
 
 float vertices[] = {
     //     ---- 位置 ----       ---- 颜色 ----     - 纹理坐标 -
-    0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 右上
-    0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
+    0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   2.0f, 2.0f,   // 右上
+    0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   2.0f, 0.0f,   // 右下
     -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 左下
-    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // 左上
+    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 2.0f    // 左上
 };
 
 unsigned int indices[] = {
@@ -22,7 +22,7 @@ unsigned int indices[] = {
 unsigned int VBO;
 unsigned int VAO;
 unsigned int EBO;
-unsigned int texture;
+unsigned int texture[2];
 
 Widget::Widget(QWidget *parent)
     : QOpenGLWidget(parent)
@@ -98,11 +98,14 @@ void Widget::initializeGL()
     textureWall->setMinMagFilters(QOpenGLTexture::Linear,QOpenGLTexture::Linear);
 #else
     /* 3.创建纹理 */
-    glGenTextures(1,&texture);
-    glBindTexture(GL_TEXTURE_2D,texture);
+    glGenTextures(2,texture);
+    glBindTexture(GL_TEXTURE_2D,texture[0]);
     // 3.1 为当前绑定的纹理设置环绕和过滤方式
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+    float borderColor[] = {1.0f,1.0f,0.0f,1.0f};
+    glTexParameterfv(GL_TEXTURE_2D,GL_TEXTURE_BORDER_COLOR,borderColor);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_BORDER);
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // 3.2 加载图片，并生成纹理以及多级渐远纹理（Mipmap）
@@ -111,8 +114,21 @@ void Widget::initializeGL()
     wallImage = wallImage.convertToFormat(QImage::Format_RGB888);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, wallImage.width(), wallImage.height(), 0, GL_RGB, GL_UNSIGNED_BYTE, wallImage.bits());
     glGenerateMipmap(GL_TEXTURE_2D);
+
+    glBindTexture(GL_TEXTURE_2D,texture[1]);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    QImage faceImage = QImage(":/Resources/images/awesomeface.png");
+    faceImage = faceImage.convertToFormat(QImage::Format_RGB888);
+    glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,faceImage.width(),faceImage.height(),0,GL_RGB,GL_UNSIGNED_BYTE,faceImage.bits());
+    glGenerateMipmap(GL_TEXTURE_2D);
 #endif
 
+    shaderProgram.bind();
+    shaderProgram.setUniformValue("textureWall",0);
+    shaderProgram.setUniformValue("textureFace",1);
     // 解绑VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     // 解绑VAO
@@ -121,6 +137,7 @@ void Widget::initializeGL()
 
 void Widget::resizeGL(int w, int h)
 {
+    glViewport(0,0,w,h);
 }
 
 void Widget::paintGL()
@@ -137,7 +154,9 @@ void Widget::paintGL()
     textureWall->bind();
 #else
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+//    glActiveTexture(GL_TEXTURE1);
+//    glBindTexture(GL_TEXTURE_2D,texture[1]);
 #endif
     // 渲染顶点数据
     shaderProgram.bind();
