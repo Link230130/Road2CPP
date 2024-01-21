@@ -19,7 +19,7 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdPartyLibraries\glad\glad.c">
-      <Filter>头文件</Filter>
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
