@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33130.400
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImageShowWidget", "ImageShowWidget\ImageShowWidget.vcxproj", "{42BFD4C7-A4B8-4077-BAC4-1890CBEEE5E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42BFD4C7-A4B8-4077-BAC4-1890CBEEE5E4}.Debug|x64.ActiveCfg = Debug|x64
+		{42BFD4C7-A4B8-4077-BAC4-1890CBEEE5E4}.Debug|x64.Build.0 = Debug|x64
+		{42BFD4C7-A4B8-4077-BAC4-1890CBEEE5E4}.Release|x64.ActiveCfg = Release|x64
+		{42BFD4C7-A4B8-4077-BAC4-1890CBEEE5E4}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A54B4964-1FAD-4C01-894C-6A87437C691A}
+	EndGlobalSection
+EndGlobal
