@@ -7,7 +7,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdPartyLibraries\include\GLFW\;$(SolutionDir)3rdPartyLibraries\include\GLAD\;$(SolutionDir)3rdPartyLibraries\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdPartyLibraries\include\GLFW\;$(SolutionDir)3rdPartyLibraries\include\GLAD\;$(SolutionDir)Common\;$(SolutionDir)3rdPartyLibraries\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)3rdPartyLibraries\libs\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
